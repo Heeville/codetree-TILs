@@ -1,10 +1,10 @@
 from collections import *
 
 def bfs(grid,start,n,m):
-    visited=[[False]*m for _ in range(n)]
+    visited=set()
     q=deque()
     q.append((start[0],start[1],0)) #0은 경로 카운트
-    visited[start[0]][start[1]]=True
+    visited.add(start)
     directions=[(0,-1),(-1,0),(0,1),(1,0)]
     while q:
         curr,curc,curcount=q.popleft()
@@ -14,8 +14,8 @@ def bfs(grid,start,n,m):
            tempr=curr+directions[i][0]
            tempc=curc+directions[i][1]
            if 0<=tempr<n and 0<=tempc<m:
-                if grid[tempr][tempc]==1 and visited[tempr][tempc]==False:
-                    visited[tempr][tempc]==True
+                if grid[tempr][tempc]==1 and (tempr,tempc) not in visited:
+                    visited.add((tempr,tempc))
                     q.append((tempr,tempc,curcount+1))
     return -1
 
